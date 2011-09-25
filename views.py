@@ -7,14 +7,21 @@ def manage(request):
     pass
 
 def add(request):
-    if request.method == 'GET':
+    print "in add view"
+    if request.method == 'POST':
         form = CronjobForm(request.GET)
         if form.is_valid():
+            # Add code to output to crontab here
             return HttpResponseReirect(manage)
+        else:
+            # Invalid form
+            return render_to_response('add.html', {
+                'form' : form 
+                })
     else:
         form = CronjobForm()
-
-    return render_to_response('cronPony/add.html', {
+    
+    return render_to_response('add.html', {
         'form' : form,
     })
 
