@@ -1,0 +1,14 @@
+*~
+*.orig
+*.pyc
+*.rej
+*.swp
+*.swo
+*.db
+sqlite.db
+
+.installed.cfg
+__minitage__*
+
+# For PyCharm IDE
+.idea/*
