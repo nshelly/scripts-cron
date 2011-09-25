@@ -6,7 +6,12 @@ from django.template import RequestContext
 
 def manage(request):
     # Read in current crontab here
-    cron_list = ['cron1', 'cron2']
+    from subprocess import Popen, PIPE
+    p = Popen(['crontab','-l'], stdout = PIPE)
+    # We can use the -u option to specify the user to pull
+    out, err = p.communicate()
+    cron_lines = out.split('\n')
+    cron_list = [c.split() for c in cron_lines]
     return render_to_response('manage.html',
             { 'cron_list' : cron_list } )
 
