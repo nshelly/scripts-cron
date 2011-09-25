@@ -23,6 +23,21 @@ DAY_WEEK_CHOICES =  [['*', '*']] + [
             (4, 'Thur'),
             (5, 'Fri'),
             (6, 'Sat')]
+
+MONTH_CHOICES = [['*', '*']] + [
+        (1, 'Jan'),
+        (2, 'Feb'),
+        (3, 'Mar'),
+        (4, 'Apr'),
+        (5, 'May'),
+        (6, 'June'),
+        (7, 'July'),
+        (8, 'Aug'),
+        (9, 'Sept'),
+        (10, 'Oct'),
+        (11, 'Nov'),
+        (12, 'Dec')]
+
 DAY_MONTH_CHOICES = [['*', '*']] + [(i,i) for i in range(32)]
 
 class CronjobForm(forms.Form):
@@ -30,8 +45,9 @@ class CronjobForm(forms.Form):
     minute = forms.ChoiceField(choices=MINUTE_CHOICES)
     hour = forms.ChoiceField(choices=HOUR_CHOICES)
     day_of_week = forms.ChoiceField(choices=DAY_WEEK_CHOICES)
+    month = forms.ChoiceField(choices=MONTH_CHOICES)
     day_of_month = forms.ChoiceField(choices=DAY_MONTH_CHOICES)
-    should_log = forms.BooleanField(required=True, label="Log?")
-    logfile = forms.CharField(max_length=100)
-    should_email = forms.BooleanField(required=True, label="Email?")
-    log_email = forms.EmailField()
+    should_log = forms.BooleanField(required=False, label="Log to file?")
+    logfile = forms.CharField(required=False, max_length=100)
+    should_email = forms.BooleanField(required=False, label="Email output?")
+    email = forms.EmailField(required=False)
