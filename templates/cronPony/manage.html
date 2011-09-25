@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3> Here are your current cronjobs: </h3>
+<table>
+    {% for c in cron_list %}
+    <tr>
+        <td>{{ c }}</td>
+    </tr>
+    {% endfor %}
+<table>
+{% endblock %}

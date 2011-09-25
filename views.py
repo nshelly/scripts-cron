@@ -1,11 +1,14 @@
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from cronPony.forms import CronjobForm
 from django.template import RequestContext
 
 def manage(request):
-    pass
+    # Read in current crontab here
+    cron_list = ['cron1', 'cron2']
+    return render_to_response('manage.html',
+            { 'cron_list' : cron_list } )
 
 def add(request):
     print "in add view"
@@ -24,7 +27,7 @@ def add(request):
 Adding to crontab:
 %5s %5s %5s %5s %5s %5s""" %  \
                 (minute, hour, day_of_month, month, day_of_week, command)
-            return HttpResponseRedirect(manage)
+            return redirect(manage)
         else:
             print "form is invalid"
             print form.errors
