@@ -4,9 +4,17 @@
 
 <h3> Here are your current cronjobs: </h3>
 <table>
+    <th>minute</th>
+    <th>hour</th>
+    <th>day</th>
+    <th>month</th>
+    <th>day in week</th>
+    <th>command</th>
     {% for c in cron_list %}
     <tr>
-        <td>{{ c }}</td>
+        {% for a in c %}
+            <td>{{ a }}</td>
+        {% endfor %}
     </tr>
     {% endfor %}
 <table>
