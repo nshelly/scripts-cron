@@ -1,4 +1,6 @@
 # Django settings for cron project.
+import os
+import sys
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -8,18 +10,40 @@ ADMINS = (
     ('nshelly', 'nshelly@stanford.edu'),
 )
 
+ROOT = sys.path[0]
+
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'steb+cron',
-        'USER': 'steb',
-        'PASSWORD': '1',
-        'HOST': 'sql.mit.edu',
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+if os.path.isdir("/etc/scripts"):
+    DEV = False
+else:
+    DEV = True
+
+if DEV:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    LOGIN_URL = '/accounts/login/'
+    LOGOUT_REDIRECT = '/'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': os.path.join(ROOT, 'sqlite.db'),                      # Or path to database file if using sqlite3.
+            'USER': '',                      # Not used with sqlite3.
+            'PASSWORD': '',                  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'steb+mox',                      # Or path to database file if using sqlite3.
+            'USER': 'steb',                      # Not used with sqlite3.
+            'PASSWORD': '1 Key To The City',                  # Not used with sqlite3.
+            'HOST': 'sql.mit.edu',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
+    }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -46,12 +70,13 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(ROOT, 'media')
+
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/cron/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -90,11 +115,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'cron.cronPony',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'django.contrib.admin',
-    'django.contrib.admindocs',
+    #'django.contrib.admin',
+    #'django.contrib.admindocs',
 )
 
