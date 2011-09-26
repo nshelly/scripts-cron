@@ -7,11 +7,11 @@ __parse_job = re.compile(r"""^
                            \s+
                            (?P<hour>\S+)
                            \s+
-                           (?P<mday>\S+)
+                           (?P<day_of_month>\S+)
                            \s+
                            (?P<month>\S+)
                            \s+
-                           (?P<wday>\S+)
+                           (?P<day_of_week>\S+)
                            \s+
                            (?P<quote>['"])?
                                (?P<command>.+?)
@@ -56,5 +56,5 @@ def write(crontab, env, jobs):
             f.write("\"%s\" = \"%s\"\n" % (key, val))
 
         for job in jobs:
-            f.write("%(minute)s\t%(hour)s\t%(mday)s\t%(month)s\t%(wday)s\t%(command)s\n" % job)
+            f.write("%(minute)s\t%(hour)s\t%(day_of_month)s\t%(month)s\t%(day_of_week)s\t%(command)s\n" % job)
 
