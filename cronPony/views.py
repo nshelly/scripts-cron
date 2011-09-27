@@ -3,17 +3,16 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from cronPony.forms import CronjobForm
 from django.template import RequestContext
+import CronParser
 
 def manage(request):
+    context = {}
     # Read in current crontab here
-    from subprocess import Popen, PIPE
-    p = Popen(['crontab','-l'], stdout = PIPE)
-    # We can use the -u option to specify the user to pull
-    out, err = p.communicate()
-    cron_lines = out.split('\n')
-    cron_list = [c.split() for c in cron_lines]
-    return render_to_response('manage.html',
-            { 'cron_list' : cron_list } )
+    env_vars, context["jobs"] = CronParser.read()
+    context["email"] = env_vars["MAILTO"]
+    context["logfile"] = env_vars["LOGFILE"]
+
+    return render_to_response('manage.html', context)
 
 def add(request):
     print "in add view"
@@ -49,6 +48,6 @@ Adding to crontab:
         )
         
 
-def edit(request):
+def edit(request, id=0):
     pass
 

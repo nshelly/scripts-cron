@@ -1,9 +1,8 @@
 <html>
-
     <head></head>
     <body>
-        <a href="{% url views.manage %}">Home</a> | 
-        <a href="{% url views.add %}">Add</a> |  
+        <a href="{% url manage %}">Home</a> | 
+        <a href="{% url add %}">Add</a> |  
         {% block content %}
         {% endblock %}
     </body>

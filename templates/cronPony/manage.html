@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h3> Here are your current cronjobs: </h3>
+<h3>Here are your current cronjobs:</h3>
 <table>
     <th>minute</th>
     <th>hour</th>
@@ -10,11 +10,16 @@
     <th>month</th>
     <th>day in week</th>
     <th>command</th>
-    {% for c in cron_list %}
+    <th>log</th>
+    <th>email</th>
+    {% for job in cron_jobs %}
     <tr>
-        {% for a in c %}
-            <td>{{ a }}</td>
-        {% endfor %}
+        <td>job.minute</td>
+        <td>job.hour</td>
+        <td>job.day</td>
+        <td>job.day_of_month</td>
+        <td>job.day_of_week</td>
+        <td><a href="{% url edit forloop.counter0 %}">job.command</a></td>
     </tr>
     {% endfor %}
 <table>
